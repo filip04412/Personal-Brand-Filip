@@ -25,10 +25,19 @@
     --text: #0f172a;           /* Mörk skiffergrå för skarp läsbarhet */
     --text-sekundar: #475569;  /* Mjukare grå för ingress och undertexter (kontrast > 4.5:1) */
 
-    /* Ytor och bakgrunder */
-    --yta: #f8fafc;            /* Ljus neutral bakgrund för hela sidan */
-    --yta-2: #f1f5f9;          /* Något mörkare nyans för sidhuvud och footer */
+    /* Ytor och bakgrunder - inspirerade av Sevora-referensen */
+    --yta: #f4f4f6;            /* Ljus off-white neutral bakgrund */
+    --yta-2: #eeeeee;          /* Något tonad nyans för sidhuvud och footer */
     --yta-kort: #ffffff;       /* Krispigt vit bakgrund för kort och hero */
+
+    /* Subtilt diagonalt mönster för sidhuvud och bakgrund */
+    --diagonal-monster: repeating-linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, 0.032) 0,
+        rgba(0, 0, 0, 0.032) 1px,
+        transparent 1px,
+        transparent 6px
+    );
 
     /* Profilfärger och accenter */
     --primar: #0f172a;         /* Huvudfärg för rubriker och primära knappar */
@@ -48,6 +57,11 @@
    3 · Grundstil (Mobilversion först)
    Basinställningar för typsnitt, textflöde och bilder.
    ========================================================================== */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--luft) * 5);
+}
+
 body {
     margin: 0;
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -55,6 +69,7 @@ body {
     line-height: 1.65;
     color: var(--text);
     background-color: var(--yta);
+    background-image: var(--diagonal-monster);
     transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden; /* Förhindrar scroll i sidled */
 }
@@ -112,29 +127,87 @@ img {
 
 /* ==========================================================================
    4 · Sidhuvud och meny
-   Mobilversion med flexbox, tydlig hierarki och temaknapp.
+   Slimmad, minimalistisk navigationsbar baserad på Sevora-referensen.
    ========================================================================== */
 .sidhuvud {
-    display: flex;
-    flex-direction: column;
-    gap: var(--luft);
-    padding: calc(var(--luft) * 1.25);
-    background: var(--yta-2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background-color: var(--yta);
+    background-image: var(--diagonal-monster);
     border-bottom: 1px solid var(--kant);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+.sidhuvud-inre {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0.9rem calc(var(--luft) * 1.5);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Varumärke och logotyp på vänster sida */
+.varumarke {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-self: start;
+    user-select: none;
+}
+
+.varumarke-logo {
+    width: 26px;
+    height: 26px;
+    color: var(--primar);
+    flex-shrink: 0;
+    transition: transform 0.25s ease, color 0.3s ease;
+}
+
+.varumarke:hover .varumarke-logo {
+    transform: rotate(12deg);
+}
+
+.varumarke-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sidhuvud h1 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--primar);
+    transition: color 0.3s ease;
+}
+
 .sidhuvud .roll {
-    font-size: 0.9375rem;
+    font-size: 0.75rem;
     font-weight: 500;
+    line-height: 1.25;
     color: var(--text-sekundar);
     margin: 0;
+    transition: color 0.3s ease;
+}
+
+/* Centrerad horisontell navigation */
+.sidhuvud-inre > nav {
+    justify-self: center;
 }
 
 nav ul {
     display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--luft) * 0.75);
+    align-items: center;
+    gap: 2rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -142,41 +215,152 @@ nav ul {
 
 nav a {
     display: inline-block;
-    padding: 0.4rem 0.85rem;
+    padding: 0.35rem 0.25rem;
     font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--text);
+    font-weight: 500;
+    color: var(--text-sekundar);
     text-decoration: none;
-    border-radius: 9999px; /* Pillerform inspirerad av Sevora */
-    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 4px;
+    transition: color 0.18s ease;
 }
 
 nav a:hover {
-    background-color: var(--kant);
+    color: var(--text);
     text-decoration: none;
+    background: transparent;
 }
 
-/* Knapp för mörkt läge */
+/* Mörkt läge-knapp på höger sida (formad som Start a project-knappen i Sevora) */
+.sidhuvud-inre > .tema-knapp {
+    justify-self: end;
+}
+
 .tema-knapp {
-    align-self: flex-start;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.45rem 0.9rem;
-    font-size: 1.1rem;
+    gap: 0.45rem;
+    padding: 0.55rem 1.15rem;
+    font-size: 0.875rem;
     font-family: inherit;
-    border: 1px solid var(--kant);
-    border-radius: 9999px;
-    background: var(--yta-kort);
-    color: var(--text);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    background: #111418;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
 }
 
 .tema-knapp:hover {
-    transform: scale(1.05);
-    background: var(--yta-2);
+    background: #1e242d;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.tema-knapp:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+.tema-ikon {
+    font-size: 0.9375rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.tema-text {
+    display: inline-block;
+    line-height: 1;
+}
+
+/* Responsiv layout för mindre skärmar */
+@media (max-width: 48rem) {
+    .sidhuvud-inre {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem var(--luft);
+        gap: 0.75rem 1rem;
+    }
+
+    .sidhuvud-inre > .varumarke {
+        order: 1;
+    }
+
+    .sidhuvud-inre > .tema-knapp {
+        order: 2;
+    }
+
+    .sidhuvud-inre > nav {
+        order: 3;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul {
+        justify-content: center;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    .sidhuvud-inre {
+        padding: 0.65rem 0.75rem;
+        gap: 0.65rem;
+    }
+
+    .sidhuvud h1 {
+        font-size: 0.95rem;
+    }
+
+    .sidhuvud .roll {
+        display: none;
+    }
+
+    .tema-text {
+        display: none;
+    }
+
+    .tema-knapp {
+        padding: 0.45rem 0.75rem;
+    }
+
+    nav ul {
+        gap: 0.85rem;
+    }
+
+    nav a {
+        font-size: 0.85rem;
+    }
+
+    .hero {
+        padding: 2.25rem 1.35rem;
+        border-radius: 20px;
+        min-height: auto;
+    }
+
+    .hero-rubrik {
+        font-size: 2.15rem;
+    }
+
+    .hero .knapp {
+        width: 100%;
+        text-align: center;
+    }
+
+    .kontakt-formular {
+        padding: calc(var(--luft) * 1.25);
+    }
+
+    .kontakt-skicka {
+        width: 100%;
+    }
 }
 
 /* ==========================================================================
@@ -184,37 +368,129 @@ nav a:hover {
    Struktur för sidans huvuddel och den inbjudande hero-sektionen.
    ========================================================================== */
 main {
-    max-width: 68rem;
+    max-width: 76rem;
     margin: 0 auto;
-    padding: 0 calc(var(--luft) * 1.25);
+    padding: 0 calc(var(--luft) * 1.5);
 }
 
 section {
     padding: calc(var(--luft) * 2.5) 0;
 }
 
-/* Hero-kort: Inspirerat av den stora rundade kortcontainern i Sevora */
+/* Hero-kort: Stor, elegant och rymlig container inspirerad av Sevora */
 .hero {
-    background: var(--yta-kort);
-    border: 1px solid var(--kant);
-    border-radius: calc(var(--radie) * 1.5);
-    padding: calc(var(--luft) * 2);
+    position: relative;
+    background: radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 60%),
+                linear-gradient(145deg, #fbfbfd 0%, #f1f3f6 52%, #e8ecf1 100%);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 28px;
+    padding: clamp(2.5rem, 6vw, 4.75rem) clamp(2rem, 5vw, 4.5rem);
     margin-top: calc(var(--luft) * 1.5);
-    box-shadow: var(--skugga);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: calc(var(--luft) * 2);
+    box-shadow: 0 25px 50px -20px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.02);
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hero h2 {
-    font-size: 1.85rem;
+/* Subtil geometrisk vattenstämpel i bakgrunden för visuell balans */
+.hero::after {
+    content: "";
+    position: absolute;
+    right: -2rem;
+    bottom: -3rem;
+    width: 380px;
+    height: 380px;
+    background-image: url('data:image/svg+xml;utf8,<svg width="320" height="320" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2C7.373 2 2 7.373 2 14c0 3.513 1.492 6.678 3.89 8.898l2.64-2.64A8.528 8.528 0 0 1 5.4 14c0-4.75 3.85-8.6 8.6-8.6 2.743 0 5.195 1.294 6.763 3.308l2.7-2.7C21.132 3.543 17.789 2 14 2z" fill="%230f172a"/><path d="M14 26c6.627 0 12-5.373 12-12 0-3.513-1.492-6.678-3.89-8.898l-2.64 2.64A8.528 8.528 0 0 1 22.6 14c0 4.75-3.85 8.6-8.6 8.6-2.743 0-5.195-1.294-6.763-3.308l-2.7 2.7C6.868 24.457 10.211 26 14 26z" fill="%230f172a"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.032;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.hero-innehall {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+}
+
+/* Stor editorial serif-rubrik i tvåtonad stil (Design Better / Faster Smarter) */
+.hero-rubrik {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: clamp(2.35rem, 5.2vw, 4.15rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    margin: 0 0 calc(var(--luft) * 1.5) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.rubrik-rad {
+    display: block;
+}
+
+.rubrik-primar {
     color: var(--primar);
-    max-width: 22ch;
-    margin-bottom: calc(var(--luft) * 0.75);
+    font-weight: 700;
+}
+
+.rubrik-sekundar {
+    color: #94a3b8;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .hero p {
-    font-size: 1.125rem;
+    font-family: inherit;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.65;
     color: var(--text-sekundar);
-    margin-bottom: calc(var(--luft) * 1.5);
+    max-width: 44ch;
+    margin: 0 0 calc(var(--luft) * 2) 0;
+}
+
+.hero-knappar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--luft);
+}
+
+/* Hero-knapp med modern avrundad rektangelform som i Sevora */
+.hero .knapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.85rem;
+    font-size: 0.975rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    background: #111418;
+    color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    transition: transform 0.18s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero .knapp:hover {
+    background: #1e242d;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    text-decoration: none;
+}
+
+.hero .knapp:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
 }
 
 /* Primär pillerknapp */
@@ -267,6 +543,92 @@ section {
     max-width: 100%;
     border-radius: var(--radie);
     box-shadow: var(--skugga);
+}
+
+/* Kontaktformulär */
+.kontakt-formular {
+    background: var(--yta-kort);
+    border: 1px solid var(--kant);
+    border-radius: var(--radie);
+    padding: calc(var(--luft) * 2);
+    box-shadow: var(--skugga);
+    max-width: 38rem;
+    margin: calc(var(--luft) * 1.5) 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--luft) * 1.25);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-grupp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-grupp label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--primar);
+    letter-spacing: -0.01em;
+}
+
+.form-grupp input,
+.form-grupp textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    background-color: var(--yta);
+    border: 1px solid var(--kant);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+}
+
+.form-grupp input:focus,
+.form-grupp textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: var(--yta-kort);
+}
+
+.form-grupp textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.form-grupp input::placeholder,
+.form-grupp textarea::placeholder {
+    color: var(--text-sekundar);
+    opacity: 0.7;
+}
+
+.kontakt-skicka {
+    align-self: flex-start;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    padding: 0.85rem 1.75rem;
+}
+
+.form-meddelande {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    display: none;
+}
+
+.form-meddelande.synlig {
+    display: block;
+}
+
+.form-meddelande.framgang {
+    color: #16a34a;
 }
 
 /* Kontaktsektionens länkrad */
@@ -359,16 +721,8 @@ footer p {
    När skärmen är minst 48rem (768px) expanderar layouten till flera kolumner.
    ========================================================================== */
 @media (min-width: 48rem) {
-    /* Sidhuvudet läggs i en horisontell rad */
-    .sidhuvud {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: calc(var(--luft) * 1.25) calc(var(--luft) * 2.5);
-    }
-
-    .tema-knapp {
-        align-self: center;
+    .sidhuvud h1 {
+        font-size: 1.05rem;
     }
 
     /* Större rubrikstorlekar på dator */
@@ -380,13 +734,8 @@ footer p {
         font-size: 2rem;
     }
 
-    .hero h2 {
-        font-size: 2.5rem;
-    }
-
-    /* Hero-kortet får mer luft */
     .hero {
-        padding: calc(var(--luft) * 3);
+        min-height: 520px;
     }
 
     /* Om mig visas med bild och text sida vid sida */
@@ -410,8 +759,8 @@ footer p {
         padding: 0 calc(var(--luft) * 2);
     }
 
-    .hero h2 {
-        font-size: 2.75rem;
+    .hero-rubrik {
+        font-size: 4.25rem;
     }
 }
 
@@ -429,6 +778,15 @@ body.morkt {
     --yta-2: #111827;          /* Mörk yta för sidhuvud och footer */
     --yta-kort: #162033;       /* Upphöjd mörk kortbakgrund */
 
+    /* Subtilt diagonalt mönster för mörkt läge */
+    --diagonal-monster: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.024) 0,
+        rgba(255, 255, 255, 0.024) 1px,
+        transparent 1px,
+        transparent 6px
+    );
+
     /* Profilfärger i mörkt läge */
     --primar: #f8fafc;         /* Ljusa rubriker */
     --primar-hover: #e2e8f0;
@@ -439,6 +797,64 @@ body.morkt {
     /* Mörka skuggor */
     --skugga: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
     --skugga-hover: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* Mörkt läge för tema-knappen */
+body.morkt .tema-knapp {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.morkt .tema-knapp:hover {
+    background: #27354d;
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* Navigationslänkar i mörkt läge */
+body.morkt nav a {
+    color: var(--text-sekundar);
+}
+
+body.morkt nav a:hover {
+    color: var(--text);
+    background: transparent;
+}
+
+/* Hero i mörkt läge */
+body.morkt .hero {
+    background: radial-gradient(circle at 10% 15%, rgba(56, 189, 248, 0.04) 0%, rgba(56, 189, 248, 0) 50%),
+                linear-gradient(145deg, #162033 0%, #111a2a 55%, #0b111c 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+body.morkt .hero::after {
+    opacity: 0.04;
+    filter: invert(1);
+}
+
+body.morkt .rubrik-primar {
+    color: #f8fafc;
+}
+
+body.morkt .rubrik-sekundar {
+    color: #64748b;
+}
+
+body.morkt .hero .knapp {
+    background: #f8fafc;
+    color: #0b0f17;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+body.morkt .hero .knapp:hover {
+    background: #e2e8f0;
+    color: #0b0f17;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 /* Specifika knappanpassningar för mörkt läge */
@@ -464,6 +880,31 @@ body.morkt .knapp-sekundar:hover {
     border-color: var(--text-sekundar);
 }
 
-body.morkt nav a:hover {
+/* Formulär i mörkt läge */
+body.morkt .form-grupp input,
+body.morkt .form-grupp textarea {
+    background-color: var(--yta);
+    color: var(--text);
+    border-color: var(--kant);
+}
+
+body.morkt .form-grupp input:focus,
+body.morkt .form-grupp textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
     background-color: var(--yta-kort);
+}
+
+body.morkt .kontakt-skicka {
+    background: #f8fafc;
+    color: #0b0f17;
+}
+
+body.morkt .kontakt-skicka:hover {
+    background: #e2e8f0;
+    color: #0b0f17;
+}
+
+body.morkt .form-meddelande.framgang {
+    color: #4ade80;
 }

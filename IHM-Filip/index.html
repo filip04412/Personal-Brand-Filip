@@ -7,35 +7,73 @@
     <title>Filip Löndén Berntsson - Digital Marketing Specialist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PZZV6JKG');</script>
+    <!-- End Google Tag Manager -->
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PZZV6JKG" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header class="sidhuvud">
-        <div>
-            <h1>Filip Löndén Berntsson</h1>
-            <p class="roll">Digital Marketing Specialist i Göteborg</p>
+        <div class="sidhuvud-inre">
+            <div class="varumarke">
+                <svg class="varumarke-logo" width="28" height="28" viewBox="0 0 28 28" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                        d="M14 2C7.373 2 2 7.373 2 14c0 3.513 1.492 6.678 3.89 8.898l2.64-2.64A8.528 8.528 0 0 1 5.4 14c0-4.75 3.85-8.6 8.6-8.6 2.743 0 5.195 1.294 6.763 3.308l2.7-2.7C21.132 3.543 17.789 2 14 2z"
+                        fill="currentColor" />
+                    <path
+                        d="M14 26c6.627 0 12-5.373 12-12 0-3.513-1.492-6.678-3.89-8.898l-2.64 2.64A8.528 8.528 0 0 1 22.6 14c0 4.75-3.85 8.6-8.6 8.6-2.743 0-5.195-1.294-6.763-3.308l-2.7 2.7C6.868 24.457 10.211 26 14 26z"
+                        fill="currentColor" />
+                </svg>
+                <div class="varumarke-text">
+                    <h1>Filip Löndén Berntsson</h1>
+                    <p class="roll">Digital Marketing Specialist i Göteborg</p>
+                </div>
+            </div>
+            <nav aria-label="Huvudmeny">
+                <ul>
+                    <li><a href="#om">Om mig</a></li>
+                    <li><a href="#Kompetenser">Kompetenser</a></li>
+                    <li><a href="#projekt">Projekt</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                </ul>
+            </nav>
+            <button id="tema" class="tema-knapp" aria-label="Växla till mörkt läge">
+                <span class="tema-ikon" aria-hidden="true">🌙</span>
+                <span class="tema-text">Mörkt läge</span>
+            </button>
         </div>
-        <nav aria-label="Huvudmeny">
-            <ul>
-                <li><a href="#om">Om mig</a></li>
-                <li><a href="#Kompetenser">Kompetenser</a></li>
-                <li><a href="#projekt">Projekt</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-        </nav>
-        <button id="tema" class="tema-knapp" aria-label="Växla till mörkt läge">🌙</button>
     </header>
 
     <main>
-        <section class="hero">
-            <h2>Jag hjälper små företag att bli hittade och valda online</h2>
-            <p>Sök, sociala medier och e-post som hänger ihop – så att rätt kunder hittar dig och väljer dig.</p>
-            <a href="https://www.linkedin.com/in/filip-l-b-b9a1b0295/" class="knapp">Skicka ett meddelande på
-                LinkedIn</a>
+        <section class="hero" aria-label="Introduktion">
+            <div class="hero-innehall">
+                <h2 class="hero-rubrik">
+                    <span class="rubrik-rad rubrik-primar">Jag utbildar mig till</span>
+                    <span class="rubrik-rad rubrik-sekundar">Digital Marketing Specialist</span>
+                </h2>
+                <p>Jag söker LIA - plats från Mars - Juni 2027.</p>
+                <div class="hero-knappar">
+                    <a href="https://www.linkedin.com/in/filip-l-b-b9a1b0295/" class="knapp" target="_blank"
+                        rel="noopener">Skicka ett meddelande på LinkedIn</a>
+                </div>
+            </div>
         </section>
 
         <section id="om">
@@ -52,10 +90,10 @@
         </section>
 
         <section id="Kompetenser">
-            <h2>Kompetenser</h2>
+            <h2>Kompetenser efter utbildningen</h2>
             <ul class="rutnat">
                 <li class="kort">
-                    <h3>Synas i sök</h3>
+                    <h3>SEO</h3>
                     <p>Sökordsanalys, texter och en Google-profil som lockar till klick.</p>
                 </li>
                 <li class="kort">
@@ -75,19 +113,22 @@
                 <article class="kort">
                     <img src="img/projekt-1.jpg" alt="Skärmbild av ett kafés Google-profil med betyg och öppettider"
                         width="600" height="400">
-                    <h3>Instagram</h3>
-                    <p>Kursuppgift: plan för Google-profil och sökord för ett fiktivt kafé i Göteborg.</p>
+                    <h3>Fotografering</h3>
+                    <p>Fotograferar djur och natur. Jag har även erfarenhet av produktfotografering.</p>
                 </article>
                 <article class="kort">
                     <img src="img/projekt-2.jpg" alt="Innehållskalender för en månad med inlägg markerade per kanal"
                         width="600" height="400">
-                    <h3>Innehållsplan för en månad</h3>
-                    <p>Kursuppgift: pelare, kanaler och tolv inlägg för en hållbar kaffeprenumeration.</p>
+                    <h3>Rullstolsbasket</h3>
+                    <p>Jag är aktiv på både nationell och internationell nivå. Jag har deltagit i C-EM 2025 och B-EM
+                        2026 med svenska landslaget.</p>
                 </article>
                 <article class="kort">
-                    <img src="img/projekt-3.jpg" alt="Den här webbplatsen i mobilvy" width="600" height="400">
-                    <h3>Den här sajten</h3>
-                    <p>Handkodad med HTML, CSS och JavaScript, med AI som kodstöd.</p>
+                    <img src="https://www.unionen.se/sites/default/files/styles/promo_regular/public/2026-01/IHM_logga2_960x640px.jpg.webp?h=b3660f0d&itok=IUDoDpQL"
+                        alt="Bild på logga" width="600" height="400">
+                    <h3>Marknadsföring</h3>
+                    <p>Under min utbildning till Digital Marketing Specialist på IHM Business School i Göteborg har jag
+                        lärt mig grunderna inom marknadsföring.</p>
                 </article>
             </div>
         </section>
@@ -95,6 +136,29 @@
         <section id="kontakt">
             <h2>Kontakt</h2>
             <p>Vill du veta mer? Mejla mig eller hör av dig på LinkedIn.</p>
+
+            <form id="kontakt-form" class="kontakt-formular">
+                <div class="form-grupp">
+                    <label for="namn">Namn</label>
+                    <input type="text" id="namn" name="namn" placeholder="Ditt namn" required autocomplete="name">
+                </div>
+
+                <div class="form-grupp">
+                    <label for="epost">E-post</label>
+                    <input type="email" id="epost" name="epost" placeholder="din.epost@exempel.se" required
+                        autocomplete="email">
+                </div>
+
+                <div class="form-grupp">
+                    <label for="meddelande">Meddelande</label>
+                    <textarea id="meddelande" name="meddelande" rows="5" placeholder="Skriv ditt meddelande här..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="knapp kontakt-skicka">Skicka meddelande</button>
+                <p id="form-svar" class="form-meddelande" aria-live="polite"></p>
+            </form>
+
             <div class="kontakt-lankar">
                 <p><a href="mailto:Filip.londen.berntsson@gmail.com" class="knapp knapp-sekundar">Gmail</a></p>
                 <p><a href="https://www.linkedin.com/in/filip-l-b-b9a1b0295/" target="_blank" rel="noopener"
