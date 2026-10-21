@@ -553,6 +553,7 @@ section {
 
 .om-innehall img {
     max-width: 100%;
+    object-fit: contain;
     border-radius: var(--radie);
     box-shadow: var(--skugga);
 }
@@ -724,6 +725,10 @@ section {
     aspect-ratio: 16 / 10;
     object-fit: cover;
     background-color: var(--kant);
+}
+
+.kort img.fotografering-bild {
+    object-fit: contain;
 }
 
 /* ==========================================================================
@@ -964,7 +969,7 @@ footer p {
         width: 100%;
         max-width: 240px;
         aspect-ratio: 1 / 1;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 20px;
         border: 2px solid var(--kant);
         box-shadow: var(--skugga);
