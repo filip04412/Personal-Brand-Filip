@@ -553,6 +553,9 @@ section {
 
 .om-innehall img {
     max-width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: initial;
     object-fit: contain;
     border-radius: var(--radie);
     box-shadow: var(--skugga);
@@ -728,7 +731,9 @@ section {
 }
 
 .kort img.fotografering-bild {
-    object-fit: contain;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: initial;
 }
 
 /* ==========================================================================
@@ -968,8 +973,9 @@ footer p {
     .om-innehall img {
         width: 100%;
         max-width: 240px;
-        aspect-ratio: 1 / 1;
-        object-fit: contain;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: initial;
         border-radius: 20px;
         border: 2px solid var(--kant);
         box-shadow: var(--skugga);
