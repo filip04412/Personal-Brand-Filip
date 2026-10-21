@@ -1,13 +1,14 @@
 // Skript för personlig webbplats - Filip Löndén Berntsson
 
-// 1. Mörkt läge (växla klassen 'morkt' på body)
+// 1. Mörkt läge (växla klassen 'morkt' på body och uppdatera meta-tema)
 const temaKnapp = document.querySelector("#tema");
+const temaMetaLight = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: light)"]');
 
 function uppdateraTemaKnapp(arMorkt) {
     if (!temaKnapp) return;
     temaKnapp.innerHTML = arMorkt
-        ? '<span class="tema-ikon" aria-hidden="true">☀️</span><span class="tema-text">Ljust läge</span>'
-        : '<span class="tema-ikon" aria-hidden="true">🌙</span><span class="tema-text">Mörkt läge</span>';
+        ? '<span class="tema-ikon" aria-hidden="true">☀️</span>'
+        : '<span class="tema-ikon" aria-hidden="true">🌙</span>';
     temaKnapp.setAttribute("aria-label", arMorkt ? "Växla till ljust läge" : "Växla till mörkt läge");
 }
 
@@ -16,6 +17,63 @@ if (temaKnapp) {
         document.body.classList.toggle("morkt");
         const arMorkt = document.body.classList.contains("morkt");
         uppdateraTemaKnapp(arMorkt);
+    });
+}
+
+// 2. Mobil navigationsmeny (Hamburgare)
+const menyKnapp = document.querySelector("#meny-knapp");
+const huvudmeny = document.querySelector("#huvudmeny");
+const sidhuvud = document.querySelector(".sidhuvud");
+const navLankar = document.querySelectorAll("#huvudmeny a");
+
+function stangMeny() {
+    if (!menyKnapp || !huvudmeny) return;
+    menyKnapp.setAttribute("aria-expanded", "false");
+    menyKnapp.setAttribute("aria-label", "Öppna navigationsmeny");
+    huvudmeny.classList.remove("oppen");
+    if (sidhuvud) sidhuvud.classList.remove("meny-oppen");
+}
+
+function oppnaMeny() {
+    if (!menyKnapp || !huvudmeny) return;
+    menyKnapp.setAttribute("aria-expanded", "true");
+    menyKnapp.setAttribute("aria-label", "Stäng navigationsmeny");
+    huvudmeny.classList.add("oppen");
+    if (sidhuvud) sidhuvud.classList.add("meny-oppen");
+}
+
+if (menyKnapp && huvudmeny) {
+    menyKnapp.addEventListener("click", () => {
+        const arOppen = menyKnapp.getAttribute("aria-expanded") === "true";
+        if (arOppen) {
+            stangMeny();
+        } else {
+            oppnaMeny();
+        }
+    });
+
+    // Stäng menyn när en navigationslänk klickas
+    navLankar.forEach(lank => {
+        lank.addEventListener("click", () => {
+            stangMeny();
+        });
+    });
+
+    // Stäng vid klick utanför menyn
+    document.addEventListener("click", (e) => {
+        if (menyKnapp.getAttribute("aria-expanded") === "true") {
+            if (!huvudmeny.contains(e.target) && !menyKnapp.contains(e.target)) {
+                stangMeny();
+            }
+        }
+    });
+
+    // Stäng med Escape-tangenten
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menyKnapp.getAttribute("aria-expanded") === "true") {
+            stangMeny();
+            menyKnapp.focus();
+        }
     });
 }
 

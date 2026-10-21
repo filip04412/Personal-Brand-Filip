@@ -51,6 +51,7 @@
     --radie: 16px;             /* Mjuka rundade hörn på kort och element */
     --skugga: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
     --skugga-hover: 0 20px 30px -10px rgba(15, 23, 42, 0.1);
+    --header-hojd: 64px;       /* Höjd på sidhuvudet för korrekt scrollförskjutning */
 }
 
 /* ==========================================================================
@@ -59,7 +60,8 @@
    ========================================================================== */
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--luft) * 5);
+    scroll-padding-top: calc(var(--header-hojd) + 1rem);
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -71,7 +73,8 @@ body {
     background-color: var(--yta);
     background-image: var(--diagonal-monster);
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden; /* Förhindrar scroll i sidled */
+    overflow-x: clip; /* Förhindrar scroll i sidled utan att bryta position: sticky */
+    min-width: 320px;
 }
 
 h1,
@@ -230,17 +233,20 @@ nav a:hover {
     background: transparent;
 }
 
-/* Mörkt läge-knapp på höger sida (formad som Start a project-knappen i Sevora) */
-.sidhuvud-inre > .tema-knapp {
+/* Sidhuvudets knappar till höger (Kontakt och Mörkt läge) */
+.sidhuvud-inre > .sidhuvud-handlingar {
     justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
+.header-kontakt,
 .tema-knapp {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
-    padding: 0.55rem 1.15rem;
+    height: 38px;
     font-size: 0.875rem;
     font-family: inherit;
     font-weight: 600;
@@ -251,116 +257,122 @@ nav a:hover {
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     white-space: nowrap;
+    text-decoration: none;
+    line-height: 1;
+    box-sizing: border-box;
 }
 
+.header-kontakt {
+    padding: 0 1.15rem;
+}
+
+.tema-knapp {
+    width: 38px;
+    padding: 0;
+}
+
+.header-kontakt:hover,
 .tema-knapp:hover {
     background: #1e242d;
+    color: #ffffff;
+    text-decoration: none;
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
+.header-kontakt:active,
 .tema-knapp:active {
     transform: translateY(0);
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
 }
 
 .tema-ikon {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1;
     display: inline-block;
 }
 
-.tema-text {
-    display: inline-block;
-    line-height: 1;
+/* Hamburgarmeny-knapp (visas på mobil, dold på dator) */
+.meny-knapp {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: #111418;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    touch-action: manipulation;
 }
 
-/* Responsiv layout för mindre skärmar */
-@media (max-width: 48rem) {
-    .sidhuvud-inre {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem var(--luft);
-        gap: 0.75rem 1rem;
-    }
-
-    .sidhuvud-inre > .varumarke {
-        order: 1;
-    }
-
-    .sidhuvud-inre > .tema-knapp {
-        order: 2;
-    }
-
-    .sidhuvud-inre > nav {
-        order: 3;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    nav ul {
-        justify-content: center;
-        gap: 1.25rem;
-    }
+.meny-knapp:hover {
+    background: #1e242d;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
 }
 
-@media (max-width: 30rem) {
-    .sidhuvud-inre {
-        padding: 0.65rem 0.75rem;
-        gap: 0.65rem;
-    }
+.meny-knapp:active {
+    transform: translateY(0);
+}
 
-    .sidhuvud h1 {
-        font-size: 0.95rem;
-    }
+.meny-ikon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 14px;
+    position: relative;
+}
 
-    .sidhuvud .roll {
-        display: none;
-    }
+.meny-ikon span {
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 2px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, top 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    .tema-text {
-        display: none;
-    }
+.meny-ikon span:nth-child(1) {
+    top: 0;
+}
 
-    .tema-knapp {
-        padding: 0.45rem 0.75rem;
-    }
+.meny-ikon span:nth-child(2) {
+    top: 6px;
+}
 
-    nav ul {
-        gap: 0.85rem;
-    }
+.meny-ikon span:nth-child(3) {
+    top: 12px;
+}
 
-    nav a {
-        font-size: 0.85rem;
-    }
+/* Animerat kryss när mobilmenyn är öppen */
+.meny-knapp[aria-expanded="true"] .meny-ikon span:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+}
 
-    .hero {
-        padding: 2.25rem 1.35rem;
-        border-radius: 20px;
-        min-height: auto;
-    }
+.meny-knapp[aria-expanded="true"] .meny-ikon span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
 
-    .hero-rubrik {
-        font-size: 2.15rem;
-    }
+.meny-knapp[aria-expanded="true"] .meny-ikon span:nth-child(3) {
+    top: 6px;
+    transform: rotate(-45deg);
+}
 
-    .hero .knapp {
-        width: 100%;
-        text-align: center;
-    }
-
-    .kontakt-formular {
-        padding: calc(var(--luft) * 1.25);
-    }
-
-    .kontakt-skicka {
-        width: 100%;
-    }
+/* Mobil kontaktlänk dold som standard på dator */
+.nav-mobil-kontakt {
+    display: none;
 }
 
 /* ==========================================================================
@@ -674,12 +686,36 @@ section {
 
 .kort h3 {
     margin-top: 0;
+    margin-bottom: 0.5rem;
     color: var(--primar);
+    font-size: 1.15rem;
+    line-height: 1.35;
 }
 
 .kort p {
     margin-bottom: 0;
     color: var(--text-sekundar);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.kort-ikon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--accent);
+    margin-bottom: calc(var(--luft) * 1);
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.kort:hover .kort-ikon {
+    transform: translateY(-2px) scale(1.05);
+    background: var(--accent);
+    color: #ffffff;
 }
 
 .kort img {
@@ -717,8 +753,349 @@ footer p {
 }
 
 /* ==========================================================================
-   8 · Större skärmar (Responsiv layout via media queries)
-   När skärmen är minst 48rem (768px) expanderar layouten till flera kolumner.
+   8 · Responsiv layout (Media Queries)
+   Mobilanpassning först (< 768px), följt av surfplatta och dator.
+   ========================================================================== */
+
+/* Mobil och surfplatta (< 768px / 48rem) */
+@media (max-width: 47.9375rem) {
+    :root {
+        --header-hojd: 58px;
+    }
+
+    /* Sidhuvud: slimmad, responsiv rad med logotyp, tema och hamburgarmeny */
+    .sidhuvud-inre {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.65rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .varumarke {
+        gap: 0.65rem;
+        min-width: 0;
+    }
+
+    .varumarke-logo {
+        width: 24px;
+        height: 24px;
+    }
+
+    .varumarke-text {
+        min-width: 0;
+    }
+
+    .sidhuvud h1 {
+        font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidhuvud .roll {
+        font-size: 0.72rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidhuvud-handlingar {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .header-kontakt {
+        display: none; /* Dold i själva listen på mobil - finns i utfällbara menyn */
+    }
+
+    .tema-knapp {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+
+    .meny-knapp {
+        display: inline-flex;
+    }
+
+    /* Utfällbar mobilmeny med snygg frostat-glas-effekt */
+    .nav-meny {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--yta);
+        background-image: var(--diagonal-monster);
+        border-bottom: 1px solid var(--kant);
+        box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.15);
+        padding: 1rem 1.25rem 1.5rem;
+        transform: translateY(-8px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, visibility 0.25s;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        z-index: 99;
+    }
+
+    .nav-meny.oppen {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nav-meny ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+        width: 100%;
+    }
+
+    .nav-meny a {
+        display: flex;
+        align-items: center;
+        padding: 0.85rem 1rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+        border-radius: 12px;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+        min-height: 48px;
+    }
+
+    .nav-meny a:hover,
+    .nav-meny a:active {
+        background-color: rgba(37, 99, 235, 0.08);
+        color: var(--accent);
+        transform: translateX(4px);
+    }
+
+    .nav-mobil-kontakt {
+        display: block;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--kant);
+    }
+
+    .nav-mobil-kontakt a {
+        background: var(--primar);
+        color: var(--yta-kort);
+        justify-content: center;
+        text-align: center;
+        border-radius: 12px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+
+    .nav-mobil-kontakt a:hover,
+    .nav-mobil-kontakt a:active {
+        background: var(--primar-hover);
+        color: var(--yta-kort);
+        transform: translateY(-1px);
+    }
+
+    /* Huvudinnehåll och sektionsmarginaler */
+    main {
+        padding: 0 1rem;
+    }
+
+    section {
+        padding: calc(var(--luft) * 1.75) 0;
+    }
+
+    /* Hero-sektion på mobil */
+    .hero {
+        min-height: auto;
+        padding: clamp(1.75rem, 5.5vw, 2.75rem) clamp(1.15rem, 4.5vw, 1.75rem);
+        margin-top: 0.75rem;
+        margin-bottom: 1.5rem;
+        border-radius: 20px;
+    }
+
+    .hero-rubrik {
+        font-size: clamp(1.85rem, 6.5vw, 2.75rem);
+        line-height: 1.15;
+        margin-bottom: 1rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hero p {
+        font-size: 1.05rem;
+        line-height: 1.55;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-knappar {
+        width: 100%;
+    }
+
+    .hero .knapp {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.9375rem;
+        border-radius: 12px;
+    }
+
+    .hero::after {
+        width: 220px;
+        height: 220px;
+        right: -1rem;
+        bottom: -2rem;
+        opacity: 0.025;
+    }
+
+    /* Om mig på mobil: centrerad profilbild med rundade hörn */
+    .om-innehall {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .om-innehall img {
+        width: 100%;
+        max-width: 240px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 20px;
+        border: 2px solid var(--kant);
+        box-shadow: var(--skugga);
+    }
+
+    .om-text {
+        width: 100%;
+    }
+
+    .om-text p {
+        font-size: 1.025rem;
+        line-height: 1.6;
+    }
+
+    /* Rutnät och kort (Kompetenser & Projekt) */
+    .rutnat {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .kort {
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
+    .kort h3 {
+        font-size: 1.1rem;
+        line-height: 1.35;
+    }
+
+    .kort p {
+        font-size: 0.9375rem;
+        line-height: 1.55;
+    }
+
+    .kort-ikon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        margin-bottom: 0.75rem;
+    }
+
+    .kort img {
+        border-radius: 10px;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Kontaktformulär & knappar */
+    .kontakt-formular {
+        padding: 1.25rem;
+        border-radius: 16px;
+        margin: 1rem 0;
+        gap: 1rem;
+    }
+
+    .form-grupp label {
+        font-size: 0.875rem;
+    }
+
+    .form-grupp input,
+    .form-grupp textarea {
+        font-size: 1rem; /* 16px förhindrar oönskad auto-zoom på iOS Safari */
+        padding: 0.75rem 0.875rem;
+        border-radius: 8px;
+        min-height: 48px;
+    }
+
+    .kontakt-skicka {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.95rem;
+        min-height: 48px;
+    }
+
+    .kontakt-lankar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        width: 100%;
+    }
+
+    .kontakt-lankar p {
+        margin: 0;
+    }
+
+    .kontakt-lankar .knapp {
+        width: 100%;
+        text-align: center;
+        padding: 0.85rem 1rem;
+        font-size: 0.9375rem;
+        min-height: 48px;
+    }
+
+    /* Footer med hänsyn till safe-area på t.ex. iPhone */
+    footer {
+        padding: 2rem 1rem calc(2rem + env(safe-area-inset-bottom));
+        margin-top: 2rem;
+    }
+
+    footer p {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+}
+
+/* Små mobiler (t.ex. iPhone SE / < 380px) */
+@media (max-width: 24rem) {
+    .sidhuvud .roll {
+        display: none;
+    }
+
+    .sidhuvud-inre {
+        padding: 0.55rem 0.75rem;
+    }
+
+    .sidhuvud h1 {
+        font-size: 0.875rem;
+    }
+
+    .kontakt-lankar {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 0 0.75rem;
+    }
+}
+
+/* ==========================================================================
+   Större skärmar (Desktop & surfplatta)
    ========================================================================== */
 @media (min-width: 48rem) {
     .sidhuvud h1 {
@@ -750,6 +1127,18 @@ footer p {
     .rutnat {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: calc(var(--luft) * 2);
+    }
+
+    /* Kompetenser: 2 kolumner på surfplatta */
+    #Kompetenser .rutnat {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Skärmar från 62rem (ca 992px) och uppåt: 3 kolumner för Kompetenser */
+@media (min-width: 62rem) {
+    #Kompetenser .rutnat {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -799,18 +1188,23 @@ body.morkt {
     --skugga-hover: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
 }
 
-/* Mörkt läge för tema-knappen */
-body.morkt .tema-knapp {
+/* Mörkt läge för knapparna i headern (Kontakt, Tema och Hamburgare) */
+body.morkt .tema-knapp,
+body.morkt .header-kontakt,
+body.morkt .meny-knapp {
     background: #1e293b;
     color: #f8fafc;
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-body.morkt .tema-knapp:hover {
+body.morkt .tema-knapp:hover,
+body.morkt .header-kontakt:hover,
+body.morkt .meny-knapp:hover {
     background: #27354d;
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+    color: #f8fafc;
 }
 
 /* Navigationslänkar i mörkt läge */
@@ -821,6 +1215,38 @@ body.morkt nav a {
 body.morkt nav a:hover {
     color: var(--text);
     background: transparent;
+}
+
+/* Mobilmeny i mörkt läge */
+body.morkt .nav-meny {
+    background-color: var(--yta);
+    border-color: var(--kant);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6);
+}
+
+body.morkt .nav-meny a {
+    color: var(--text);
+}
+
+body.morkt .nav-meny a:hover,
+body.morkt .nav-meny a:active {
+    background-color: rgba(56, 189, 248, 0.12);
+    color: var(--accent);
+}
+
+body.morkt .nav-mobil-kontakt {
+    border-top-color: var(--kant);
+}
+
+body.morkt .nav-mobil-kontakt a {
+    background: #f8fafc;
+    color: #0b0f17;
+}
+
+body.morkt .nav-mobil-kontakt a:hover,
+body.morkt .nav-mobil-kontakt a:active {
+    background: #e2e8f0;
+    color: #0b0f17;
 }
 
 /* Hero i mörkt läge */
@@ -907,4 +1333,14 @@ body.morkt .kontakt-skicka:hover {
 
 body.morkt .form-meddelande.framgang {
     color: #4ade80;
+}
+
+body.morkt .kort-ikon {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--accent);
+}
+
+body.morkt .kort:hover .kort-ikon {
+    background: var(--accent);
+    color: #0b0f17;
 }

@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f4f6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)">
     <title>Filip Löndén Berntsson - Digital Marketing Specialist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,18 +48,28 @@
                     <p class="roll">Digital Marketing Specialist i Göteborg</p>
                 </div>
             </div>
-            <nav aria-label="Huvudmeny">
-                <ul>
-                    <li><a href="#om">Om mig</a></li>
-                    <li><a href="#Kompetenser">Kompetenser</a></li>
-                    <li><a href="#projekt">Projekt</a></li>
-                    <li><a href="#kontakt">Kontakt</a></li>
+            <nav id="huvudmeny" class="nav-meny" aria-label="Huvudmeny">
+                <ul class="nav-lista">
+                    <li><a href="#om" class="nav-lank">Om mig</a></li>
+                    <li><a href="#Kompetenser" class="nav-lank">Kompetenser</a></li>
+                    <li><a href="#projekt" class="nav-lank">Projekt</a></li>
+                    <li class="nav-mobil-kontakt"><a href="#kontakt" class="nav-lank nav-lank-kontakt">Kontakt</a></li>
                 </ul>
             </nav>
-            <button id="tema" class="tema-knapp" aria-label="Växla till mörkt läge">
-                <span class="tema-ikon" aria-hidden="true">🌙</span>
-                <span class="tema-text">Mörkt läge</span>
-            </button>
+            <div class="sidhuvud-handlingar">
+                <a href="#kontakt" class="header-kontakt">Kontakt</a>
+                <button id="tema" class="tema-knapp" aria-label="Växla till mörkt läge">
+                    <span class="tema-ikon" aria-hidden="true">🌙</span>
+                </button>
+                <button id="meny-knapp" class="meny-knapp" aria-label="Öppna navigationsmeny" aria-expanded="false"
+                    aria-controls="huvudmeny">
+                    <span class="meny-ikon" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -79,7 +91,8 @@
         <section id="om">
             <h2>Om mig</h2>
             <div class="om-innehall">
-                <img src="img/profil.jpg" alt="Alex Lind ler mot kameran framför en tegelvägg" width="400" height="400">
+                <img src="img/profil.png"
+                    alt="Filip Löndén Berntsson ler mot kameran" width="400" height="400">
                 <div class="om-text">
                     <p>Jag utbildar mig till Digital Marketing Specialist på IHM Business School och har ett särskilt
                         intresse
@@ -93,16 +106,80 @@
             <h2>Kompetenser efter utbildningen</h2>
             <ul class="rutnat">
                 <li class="kort">
-                    <h3>SEO</h3>
-                    <p>Sökordsanalys, texter och en Google-profil som lockar till klick.</p>
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 11 18-5v12L3 13v-2z" />
+                            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                        </svg>
+                    </div>
+                    <h3>Marknadsföring</h3>
+                    <p>Strategisk marknadsföring, målgruppsanalys, varumärkespositionering och integrerad
+                        marknadsplanering.</p>
                 </li>
                 <li class="kort">
-                    <h3>Sociala medier</h3>
-                    <p>Innehållsplan och inlägg som passar din målgrupp och din tid.</p>
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z" />
+                        </svg>
+                    </div>
+                    <h3>AI och tech för digitala marknadsförare</h3>
+                    <p>Praktisk tillämpning av AI-verktyg, prompt engineering, automation och modern marknadsteknologi
+                        (MarTech).</p>
                 </li>
                 <li class="kort">
-                    <h3>E-post som säljer</h3>
-                    <p>Nyhetsbrev och enkla automatiska flöden som följer upp nya kunder.</p>
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                            <path d="M11 8v6" />
+                            <path d="M8 11h6" />
+                        </svg>
+                    </div>
+                    <h3>Sökmotoroptimering</h3>
+                    <p>On-page, off-page och teknisk SEO samt sökordsanalys för att öka organisk synlighet och driva
+                        relevant trafik.</p>
+                </li>
+                <li class="kort">
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <circle cx="12" cy="12" r="6" />
+                            <circle cx="12" cy="12" r="2" />
+                        </svg>
+                    </div>
+                    <h3>Paid Media - Social och SEM</h3>
+                    <p>Betald annonsering via Google Ads, Meta Ads (Instagram & Facebook), budstrategier och löpande
+                        kampanjoptimering.</p>
+                </li>
+                <li class="kort">
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <path d="m10 9 5 3-5 3V9z" />
+                        </svg>
+                    </div>
+                    <h3>Content och influencer marketing</h3>
+                    <p>Värdeskapande innehållsproduktion, storytelling, kanalstrategier och framgångsrika samarbeten med
+                        kreatörer.</p>
+                </li>
+                <li class="kort">
+                    <div class="kort-ikon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                    </div>
+                    <h3>Tracking och digital analys</h3>
+                    <p>Datainsamling och spårning med Google Analytics 4 (GA4) och Google Tag Manager (GTM) för
+                        faktabaserade insikter.</p>
                 </li>
             </ul>
         </section>
@@ -111,14 +188,13 @@
             <h2>Projekt</h2>
             <div class="rutnat">
                 <article class="kort">
-                    <img src="img/projekt-1.jpg" alt="Skärmbild av ett kafés Google-profil med betyg och öppettider"
-                        width="600" height="400">
+                    <img src="img/fotografering.jpg" alt="Fotografering av djur och natur" width="600" height="400">
                     <h3>Fotografering</h3>
                     <p>Fotograferar djur och natur. Jag har även erfarenhet av produktfotografering.</p>
                 </article>
                 <article class="kort">
-                    <img src="img/projekt-2.jpg" alt="Innehållskalender för en månad med inlägg markerade per kanal"
-                        width="600" height="400">
+                    <img src="img/basketboll.svg"
+                        alt="Illustration av en basketboll som representerar rullstolsbasket" width="600" height="400">
                     <h3>Rullstolsbasket</h3>
                     <p>Jag är aktiv på både nationell och internationell nivå. Jag har deltagit i C-EM 2025 och B-EM
                         2026 med svenska landslaget.</p>
